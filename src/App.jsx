@@ -1,4 +1,5 @@
 import React from "react";
+import * as d3 from "d3";
 import {
   MapContainer,
   TileLayer,
@@ -11,9 +12,10 @@ import {
 import "leaflet/dist/leaflet.css";
 import "./App.css";
 import homePic from "./home.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const position = [37.7795, -122.4134]; // OCEIA OFFICE
+const OCEIA = [37.7795, -122.4134]; // OCEIA OFFICE
+const centerPos = [37.75229331053556, -122.44582875807029];
 
 const homeIcon = new L.Icon({
   iconUrl: homePic,
@@ -21,6 +23,14 @@ const homeIcon = new L.Icon({
   iconAnchor: [20, 40],
   popupAnchor: [0, -40],
 });
+
+const getColor = (interactionCount, min, max) => {
+  console.log(
+    `Interactions ${interactionCount} min is ${min} and max is ${max}`
+  );
+  const colorScale = d3.scaleSequential(d3.interpolateBlues).domain([500, max]);
+  return colorScale(interactionCount);
+};
 
 const getCenter = (zones) => {
   let latSum = 0,
@@ -65,7 +75,7 @@ const workAreas = [
     zones: [
       {
         name: "Zone 1",
-        color: "skyblue",
+        //color: "dodgerblue",
         coordinates: [
           [-122.40803478425775, 37.78400274444728],
           [-122.40854149778664, 37.78439579624181],
@@ -80,7 +90,7 @@ const workAreas = [
       },
       {
         name: "Zone 2",
-        color: "skyblue",
+        //color: "skyblue",
         coordinates: [
           [-122.41612366506388, 37.78443394157216],
           [-122.4153641883706, 37.7806527707686],
@@ -99,7 +109,7 @@ const workAreas = [
       },
       {
         name: "Zone 3",
-        color: "skyblue",
+        //color: "lightblue",
         coordinates: [
           [-122.41967479158174, 37.777738322089846],
           [-122.41805978777845, 37.77793796209993],
@@ -128,7 +138,7 @@ const workAreas = [
       },
       {
         name: "Zone 4",
-        color: "skyblue",
+        //color: "skyblue",
         coordinates: [
           [-122.41462778778902, 37.77873037303951],
           [-122.40807556274868, 37.78399281150135],
@@ -144,7 +154,7 @@ const workAreas = [
     zones: [
       {
         name: "Zone 1",
-        color: "purple",
+        //color: "navy",
         coordinates: [
           [-122.40790466013804, 37.798700462617646],
           [-122.41045232512653, 37.79837965145484],
@@ -155,7 +165,7 @@ const workAreas = [
       },
       {
         name: "Zone 2",
-        color: "purple",
+        //color: "navy",
         coordinates: [
           [-122.40972607540053, 37.79469784845962],
           [-122.40937042628377, 37.792960729701235],
@@ -180,7 +190,7 @@ const workAreas = [
     zones: [
       {
         name: "Zone 1",
-        color: "green",
+        //color: "lightblue",
         coordinates: [
           [-122.42283272748196, 37.77595418692822],
           [-122.42227032011209, 37.77317046065315],
@@ -203,7 +213,7 @@ const workAreas = [
       },
       {
         name: "Zone 2",
-        color: "green",
+        //color: "royalblue",
         coordinates: [
           [-122.42874748376516, 37.78094296469233],
           [-122.42820329394542, 37.77816584113576],
@@ -228,7 +238,7 @@ const workAreas = [
       },
       {
         name: "Zone 3",
-        color: "green",
+        //color: "dodgerblue",
         coordinates: [
           [-122.44039431631472, 37.7708131176349],
           [-122.44078659638626, 37.77277125980015],
@@ -246,7 +256,7 @@ const workAreas = [
       },
       {
         name: "Zone 4",
-        color: "green",
+        //color: "lightblue",
         coordinates: [
           [-122.43651613638647, 37.77701932055216],
           [-122.43670869086051, 37.77800272919082],
@@ -269,7 +279,7 @@ const workAreas = [
     zones: [
       {
         name: "Zone 1",
-        color: "red",
+        //color: "dodgerblue",
         coordinates: [
           [-122.40782199716179, 37.76839660420532],
           [-122.41073859929506, 37.768251904056],
@@ -288,7 +298,7 @@ const workAreas = [
       },
       {
         name: "Zone 2",
-        color: "red",
+        //color: "royalblue",
         coordinates: [
           [-122.40852787732976, 37.76562667281314],
           [-122.4083879370911, 37.764431903257105],
@@ -314,7 +324,7 @@ const workAreas = [
     zones: [
       {
         name: "Zone 1",
-        color: "yellow",
+        //color: "royalblue",
         coordinates: [
           [-122.50938503015985, 37.76395777824497],
           [-122.5090935612772, 37.76015578469497],
@@ -326,7 +336,7 @@ const workAreas = [
       },
       {
         name: "Zone 2",
-        color: "yellow",
+        //color: "dodgerblue",
         coordinates: [
           [-122.48975596022797, 37.759354952492274],
           [-122.48641793343083, 37.75947551626996],
@@ -343,7 +353,7 @@ const workAreas = [
       },
       {
         name: "Zone 3",
-        color: "yellow",
+        //color: "royalblue",
         coordinates: [
           [-122.49945078284688, 37.74256898544736],
           [-122.49918257654184, 37.73831271435735],
@@ -369,7 +379,7 @@ const workAreas = [
     zones: [
       {
         name: "Zone 1",
-        color: "orange",
+        //color: "dodgerblue",
         coordinates: [
           [-122.39884121837619, 37.71579081119499],
           [-122.40541045569773, 37.70777784357125],
@@ -381,7 +391,7 @@ const workAreas = [
       },
       {
         name: "Zone 2",
-        color: "orange",
+        //color: "dodgerblue",
         coordinates: [
           [-122.41559938844047, 37.71821537726257],
           [-122.41250861198577, 37.722625933496914],
@@ -398,7 +408,7 @@ const workAreas = [
       },
       {
         name: "Zone 3",
-        color: "orange",
+        //color: "dodgerblue",
         coordinates: [
           [-122.40650801483318, 37.73518044718263],
           [-122.40766761737335, 37.73725680123097],
@@ -420,56 +430,132 @@ const workAreas = [
 ];
 
 function App() {
-  return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <MapContainer
-        center={position}
-        zoom={13}
-        style={{ height: "100%", width: "100%" }}
-        scrollWheelZoom={true}
-      >
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://carto.com/">Carto</a>'
-        />
-        {/* Home Icon with Hover Popup */}
-        <HoverMarker
-          position={position}
-          content="OCEIA OFFICE: 1145 Market Street"
-        />
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [zone, setZone] = useState("");
+  const [area, setArea] = useState("");
 
-        {/* Work Areas and Zones */}
-        {workAreas.map((area, index) => (
-          <>
-            <Marker position={getCenter(area.zones)} opacity={0}>
-              <Tooltip permanent direction="center" opacity={0.6}>
-                {area.name}
-              </Tooltip>
-            </Marker>
-            {area.zones.map((zone, zIndex) => (
-              <Polygon
-                key={`zone-${zIndex}`}
-                positions={zone.coordinates.map((coord) => [
-                  coord[1],
-                  coord[0],
-                ])}
-                color={zone.color}
-                fillOpacity={0.5}
-                eventHandlers={{
-                  mouseover: (e) => {
-                    const layer = e.target;
-                    layer.bindPopup(zone.name).openPopup();
-                  },
-                  mouseout: (e) => {
-                    const layer = e.target;
-                    layer.closePopup();
-                  },
-                }}
+  useEffect(() => {
+    fetch(
+      "https://script.google.com/macros/s/AKfycbzzODq2k4wIAeaQOnNvHDa0A_2UBt8IGUAp1-qKG64CUwQmummQT1x7y64FJkD7PEG8/exec"
+    ) // Replace with your actual URL
+      .then((response) => response.json())
+      .then((json) => {
+        console.log("Fetched Data:", json);
+        setData(json);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  const getInteractions = (workArea, workZone) => {
+    var workName = "";
+    if (workArea === "Mid-Market/Tenderloin") {
+      workName = "Mid-Market";
+    } else if (workArea === "Chinatown") {
+      workName = workArea;
+    } else if (workArea === "District 5") {
+      workName = "D5";
+    } else if (workArea === "Mission") {
+      workName = workArea;
+    } else if (workArea === "Outer Sunset") {
+      workName = workArea;
+    } else if (workArea === "D10 Southeast") {
+      workName = "D10";
+    }
+    const result = data.find(
+      (item) => item["Work Area"] === workName && item["Work Zone"] === workZone
+    );
+    return result ? Number(result.Interactions) : 0;
+  };
+
+  const getMinMaxInteractions = () => {
+    if (data.length === 0) return { min: 0, max: 0 };
+
+    const interactions = data.map((item) => item.Interactions);
+    return {
+      min: Math.min(...interactions),
+      max: Math.max(...interactions),
+    };
+  };
+  const { min, max } = getMinMaxInteractions();
+
+  return (
+    <div className="page">
+      <div className="content">
+        <div className="text">
+          <h1 className="title">CAP Impact Fiscal YEAR-to-Date</h1>
+          <h3>FY 2024-2025 Total Interactions by Team</h3>
+          <p> Click on a Team's work zone to find out about thier impact!</p>
+          <h2>Team: {area}</h2>
+          <h2> Zone: {zone}</h2>
+        </div>
+        <div className="map" style={{ height: "100vh", width: "100vw" }}>
+          {loading ? (
+            <div className="loading">Loading map...</div>
+          ) : (
+            <MapContainer
+              center={centerPos}
+              zoom={13}
+              style={{ height: "100%", width: "100%" }}
+              scrollWheelZoom={true}
+            >
+              <TileLayer
+                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                attribution='&copy; <a href="https://carto.com/">Carto</a>'
               />
-            ))}
-          </>
-        ))}
-      </MapContainer>
+              {/* Home Icon with Hover Popup */}
+              <HoverMarker
+                position={OCEIA}
+                content="OCEIA OFFICE: 1145 Market Street"
+              />
+
+              {/* Work Areas and Zones */}
+              {workAreas.map((area, index) => (
+                <>
+                  <Marker position={getCenter(area.zones)} opacity={0}>
+                    <Tooltip permanent direction="center" opacity={0.6}>
+                      {area.name}
+                    </Tooltip>
+                  </Marker>
+                  {area.zones.map((zone, zIndex) => (
+                    <Polygon
+                      key={`zone-${zIndex}`}
+                      positions={zone.coordinates.map((coord) => [
+                        coord[1],
+                        coord[0],
+                      ])}
+                      color={getColor(
+                        getInteractions(area.name, zone.name),
+                        min,
+                        max
+                      )}
+                      fillOpacity={0.5}
+                      eventHandlers={{
+                        mouseover: (e) => {
+                          const layer = e.target;
+                          layer.bindPopup(zone.name).openPopup();
+                        },
+                        mouseout: (e) => {
+                          const layer = e.target;
+                          layer.closePopup();
+                        },
+                        mousedown: (e) => {
+                          setZone(zone.name);
+                          setArea(area.name);
+                        },
+                      }}
+                    />
+                  ))}
+                </>
+              ))}
+            </MapContainer>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
