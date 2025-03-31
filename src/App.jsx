@@ -13,6 +13,7 @@ import "leaflet/dist/leaflet.css";
 import "./App.css";
 import homePic from "./home.png";
 import { useEffect, useState } from "react";
+import heatmap from "./assets/heatmap.png";
 
 const OCEIA = [37.7795, -122.4134]; // OCEIA OFFICE
 const centerPos = [37.75229331053556, -122.44582875807029];
@@ -25,9 +26,6 @@ const homeIcon = new L.Icon({
 });
 
 const getColor = (interactionCount, min, max) => {
-  console.log(
-    `Interactions ${interactionCount} min is ${min} and max is ${max}`
-  );
   const colorScale = d3.scaleSequential(d3.interpolateBlues).domain([500, max]);
   return colorScale(interactionCount);
 };
@@ -432,8 +430,13 @@ const workAreas = [
 function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [teamData, setTeamData] = useState([]);
   const [zone, setZone] = useState("");
   const [area, setArea] = useState("");
+  const [selectedTeamData, setSelectedTeamData] = useState([]);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedZoneData, setSelectedZoneData] = useState("");
+  const [textColor, setTextColor] = useState("black");
 
   useEffect(() => {
     fetch(
@@ -441,13 +444,26 @@ function App() {
     ) // Replace with your actual URL
       .then((response) => response.json())
       .then((json) => {
-        console.log("Fetched Data:", json);
         setData(json);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(
+      "https://script.google.com/macros/s/AKfycbylBKCEVE4R6628IMyukmowRo8aSpG8TgtHWEzGfy10uyF791PN3v9DvPS6q5L8fE2MTQ/exec"
+    ) // Replace with your actual URL
+      .then((response) => response.json())
+      .then((json) => {
+        console.log("Fetched Data:", json);
+        setTeamData(json);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
 
@@ -481,17 +497,96 @@ function App() {
       max: Math.max(...interactions),
     };
   };
+
   const { min, max } = getMinMaxInteractions();
 
   return (
     <div className="page">
       <div className="content">
         <div className="text">
-          <h1 className="title">CAP Impact Fiscal YEAR-to-Date</h1>
-          <h3>FY 2024-2025 Total Interactions by Team</h3>
-          <p> Click on a Team's work zone to find out about thier impact!</p>
-          <h2>Team: {area}</h2>
-          <h2> Zone: {zone}</h2>
+          <div className="heading">
+            <h1 className="title">CAP Impact Fiscal YEAR-to-Date </h1>
+            <h3 className="subtitle">
+              FY 2024-2025 Total Interactions by Team
+            </h3>
+          </div>
+          <div className="instructions">
+            <p style={{ marginTop: "25px" }}>
+              {" "}
+              Interact with the map by clicking on a team's work zone to find
+              out more!
+            </p>
+            {area.length > 0 && (
+              <h2
+                style={{
+                  backgroundColor: `${selectedColor}`,
+                  color: `${textColor}`,
+                }}
+              >
+                {area}, {zone}
+              </h2>
+            )}
+          </div>
+          {zone.length > 0 && (
+            <div className="zone-section">
+              <h3>
+                {zone} has{" "}
+                <span className="highlighted-number">{selectedZoneData}</span>{" "}
+                total interactions so far!
+              </h3>
+            </div>
+          )}
+          {selectedTeamData.length > 0 && (
+            <div className="team-section">
+              <p>{area} Field Service Data</p>
+              <div className="team-grid">
+                {selectedTeamData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="team-card animate-card"
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      boxShadow: `0px 6px 20px ${selectedColor}`,
+                    }}
+                  >
+                    <h4>{item["Field Service"]}</h4>
+                    <p>{item.Interactions}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="footer">
+            <div className="city-text">
+              <p>City and County of San Francisco</p>
+              <p>Data through 02/28/2025</p>
+            </div>
+            <div className="map-guide">
+              <h3>Map Legend</h3>
+              <div className="legend">
+                <span className="legend-label">Less Interactions</span>
+                <div className="legend-container">
+                  <img
+                    src={heatmap}
+                    alt="Heatmap Legend"
+                    className="legend-bar"
+                  />
+                  <div className="legend-markers">
+                    <span className="marker" style={{ left: "15%" }}>
+                      0
+                    </span>
+                    <span className="marker" style={{ left: "50%" }}>
+                      {Math.floor(max / 2)}
+                    </span>
+                    <span className="marker" style={{ left: "85%" }}>
+                      {max}
+                    </span>
+                  </div>
+                </div>
+                <span className="legend-label">More Interactions</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="map" style={{ height: "100vh", width: "100vw" }}>
           {loading ? (
@@ -546,6 +641,27 @@ function App() {
                         mousedown: (e) => {
                           setZone(zone.name);
                           setArea(area.name);
+                          setSelectedColor(
+                            getColor(
+                              getInteractions(area.name, zone.name),
+                              min,
+                              max
+                            )
+                          );
+
+                          setSelectedZoneData(
+                            getInteractions(area.name, zone.name)
+                          );
+
+                          const teamDetails = teamData.filter(
+                            (item) => item["Team"] === area.name
+                          );
+
+                          setSelectedTeamData([]);
+                          setTimeout(
+                            () => setSelectedTeamData(teamDetails),
+                            100
+                          );
                         },
                       }}
                     />
