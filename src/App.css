@@ -149,8 +149,6 @@ img {
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* gap: 50px; */
-  flex-wrap: wrap;
 }
 
 @media (max-width: 768px) {

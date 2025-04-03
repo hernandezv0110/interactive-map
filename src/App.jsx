@@ -14,6 +14,7 @@ import "./App.css";
 import homePic from "./home.png";
 import { useEffect, useState } from "react";
 import heatmap from "./assets/heatmap.png";
+import PercentageBar from "./PercentageBar";
 
 const OCEIA = [37.7795, -122.4134]; // OCEIA OFFICE
 const centerPos = [37.75229331053556, -122.44582875807029];
@@ -505,7 +506,7 @@ function App() {
       <div className="content">
         <div className="text">
           <div className="heading">
-            <h1 className="title">CAP Impact Fiscal YEAR-to-Date </h1>
+            <h1 className="title">CAP Impact Fiscal Year-to-Date </h1>
             <h3 className="subtitle">
               FY 2024-2025 Total Interactions by Team
             </h3>
@@ -538,21 +539,27 @@ function App() {
           )}
           {selectedTeamData.length > 0 && (
             <div className="team-section">
-              <p>{area} Field Service Data</p>
-              <div className="team-grid">
-                {selectedTeamData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="team-card animate-card"
-                    style={{
-                      animationDelay: `${index * 100}ms`,
-                      boxShadow: `0px 6px 20px ${selectedColor}`,
-                    }}
-                  >
-                    <h4>{item["Field Service"]}</h4>
-                    <p>{item.Interactions}</p>
-                  </div>
-                ))}
+              <div className="field-data">
+                <p>{area} Field Service Data</p>
+                <div className="team-grid">
+                  {selectedTeamData.map((item, index) => (
+                    <div
+                      key={index}
+                      className="team-card animate-card"
+                      style={{
+                        animationDelay: `${index * 100}ms`,
+                        boxShadow: `0px 6px 20px ${selectedColor}`,
+                      }}
+                    >
+                      <h4>{item["Field Service"]}</h4>
+                      <p>{item.Interactions}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="zone-data">
+                <p>{zone} Interaction Distribution Percentage</p>
+                <PercentageBar zone="Downtown" interactionPercentage={35} />
               </div>
             </div>
           )}
