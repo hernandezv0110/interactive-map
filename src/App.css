@@ -146,8 +146,6 @@ img {
 .team-section {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 }
 
@@ -155,6 +153,7 @@ img {
   .team-section {
     flex-direction: column; /* Stack items */
     text-align: center;
+    align-items: center;
   }
 
   .team-grid {
@@ -226,4 +225,14 @@ img {
   }
 
 
+}
+
+.field-data p {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.zone-data p {
+  margin-bottom: 60px;
+  margin-top: 0;
 }

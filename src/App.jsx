@@ -468,6 +468,25 @@ function App() {
       });
   }, []);
 
+  const updateWorkAreaName = (workArea) => {
+    var workName = "";
+    if (workArea === "Mid-Market/Tenderloin") {
+      workName = "Mid-Market";
+    } else if (workArea === "Chinatown") {
+      workName = workArea;
+    } else if (workArea === "District 5") {
+      workName = "D5";
+    } else if (workArea === "Mission") {
+      workName = workArea;
+    } else if (workArea === "Outer Sunset") {
+      workName = workArea;
+    } else if (workArea === "D10 Southeast") {
+      workName = "D10";
+    }
+
+    return workName;
+  };
+
   const getInteractions = (workArea, workZone) => {
     var workName = "";
     if (workArea === "Mid-Market/Tenderloin") {
@@ -500,6 +519,17 @@ function App() {
   };
 
   const { min, max } = getMinMaxInteractions();
+
+  const getPercentage = (workArea, workZone) => {
+    const workZoneInteractions = getInteractions(workArea, workZone);
+    const updatedWorkArea = updateWorkAreaName(workArea);
+    const filtered = data.filter(
+      (item) => item["Work Area"] === updatedWorkArea
+    );
+    const total = filtered.reduce((sum, item) => sum + item.Interactions, 0);
+    const percentage = (workZoneInteractions / total) * 100;
+    return percentage.toFixed(2);
+  };
 
   return (
     <div className="page">
@@ -559,7 +589,9 @@ function App() {
               </div>
               <div className="zone-data">
                 <p>{zone} Interaction Distribution Percentage</p>
-                <PercentageBar zone="Downtown" interactionPercentage={35} />
+                <PercentageBar
+                  interactionPercentage={getPercentage(area, zone)}
+                />
               </div>
             </div>
           )}
