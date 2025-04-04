@@ -550,7 +550,8 @@ function App() {
             {area.length > 0 && (
               <h2
                 style={{
-                  backgroundColor: `${selectedColor}`,
+                  borderTop: `5px solid ${selectedColor}`,
+                  borderBottom: `5px solid ${selectedColor}`,
                   color: `${textColor}`,
                 }}
               >
@@ -587,12 +588,19 @@ function App() {
                   ))}
                 </div>
               </div>
-              <div className="zone-data">
+              <div
+                className="zone-data"
+                style={{ position: "relative", display: "inline-block" }}
+              >
                 <p>{zone} Interaction Distribution Percentage</p>
                 <PercentageBar
                   interactionPercentage={getPercentage(area, zone)}
                   color={selectedColor}
                 />
+                <div className="tooltip">
+                  This progress bar shows the % of total interactions in this
+                  zone.
+                </div>
               </div>
             </div>
           )}

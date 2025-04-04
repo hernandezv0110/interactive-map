@@ -160,6 +160,7 @@ img {
     grid-template-columns: repeat(2, minmax(100px, 1fr)); 
     max-width: 80vw; /* Prevents overflow */
     transform: scale(1); /* Reset scaling */
+    margin-bottom: 40px;
   }
 
   .team-card {
@@ -235,4 +236,32 @@ img {
 .zone-data p {
   margin-bottom: 60px;
   margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .zone-data p {
+    margin-bottom: 30px;
+  }
+}
+
+.zone-data .tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  position: absolute;
+  bottom: -5%; /* adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.zone-data:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
