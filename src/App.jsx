@@ -591,6 +591,7 @@ function App() {
                 <p>{zone} Interaction Distribution Percentage</p>
                 <PercentageBar
                   interactionPercentage={getPercentage(area, zone)}
+                  color={selectedColor}
                 />
               </div>
             </div>

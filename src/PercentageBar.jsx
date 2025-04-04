@@ -3,8 +3,9 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useEffect, useState } from "react";
 
-const PercentageBar = ({ interactionPercentage }) => {
+const PercentageBar = ({ interactionPercentage, color }) => {
   const [animatedValue, setAnimatedValue] = useState(0);
+  console.log(color);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -23,7 +24,7 @@ const PercentageBar = ({ interactionPercentage }) => {
           styles={buildStyles({
             pathTransitionDuration: 1.5,
             textSize: "16px",
-            pathColor: "deepskyblue",
+            pathColor: color,
             trailColor: "#ddd",
             textColor: "#333",
             strokeLinecap: "round",
