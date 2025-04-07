@@ -243,25 +243,3 @@ img {
     margin-bottom: 30px;
   }
 }
-
-.zone-data .tooltip {
-  visibility: hidden;
-  opacity: 0;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 8px 12px;
-  border-radius: 6px;
-  position: absolute;
-  bottom: -5%; /* adjust as needed */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  transition: opacity 0.3s ease;
-  white-space: nowrap;
-}
-
-.zone-data:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
-}

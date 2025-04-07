@@ -563,7 +563,9 @@ function App() {
             <div className="zone-section">
               <h3>
                 {zone} has{" "}
-                <span className="highlighted-number">{selectedZoneData}</span>{" "}
+                <span className="highlighted-number">
+                  {selectedZoneData.toLocaleString()}
+                </span>{" "}
                 total interactions so far!
               </h3>
             </div>
@@ -583,7 +585,7 @@ function App() {
                       }}
                     >
                       <h4>{item["Field Service"]}</h4>
-                      <p>{item.Interactions}</p>
+                      <p>{item.Interactions.toLocaleString()}</p>
                     </div>
                   ))}
                 </div>
@@ -597,10 +599,6 @@ function App() {
                   interactionPercentage={getPercentage(area, zone)}
                   color={selectedColor}
                 />
-                <div className="tooltip">
-                  This progress bar shows the % of total interactions in this
-                  zone.
-                </div>
               </div>
             </div>
           )}
