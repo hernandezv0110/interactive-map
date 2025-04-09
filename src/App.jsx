@@ -528,7 +528,7 @@ function App() {
     );
     const total = filtered.reduce((sum, item) => sum + item.Interactions, 0);
     const percentage = (workZoneInteractions / total) * 100;
-    return percentage.toFixed(2);
+    return percentage.toFixed(0);
   };
 
   return (
