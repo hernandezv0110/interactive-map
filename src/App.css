@@ -126,6 +126,16 @@ img {
   padding: 10px; 
   text-align: center;
   font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100px;
+  gap: 8px; 
+}
+
+.team-card h4 {
+  min-height: 2.2em;
+  margin: 0;
 }
 
 @keyframes fadeInUp {
