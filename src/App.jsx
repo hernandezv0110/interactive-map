@@ -601,6 +601,11 @@ function App() {
                   interactionPercentage={getPercentage(area, zone)}
                   color={selectedColor}
                 />
+                <p>
+                  {" "}
+                  {zone} contributed {getPercentage(area, zone)}% of all
+                  interactions in {area}.
+                </p>
               </div>
             </div>
           )}
