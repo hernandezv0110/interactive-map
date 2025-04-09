@@ -544,8 +544,8 @@ function App() {
           <div className="instructions">
             <p style={{ marginTop: "25px" }}>
               {" "}
-              Interact with the map by clicking on a team's work zone to find
-              out more!
+              Interact with the map by clicking on a team's work zone to learn
+              more!
             </p>
             {area.length > 0 && (
               <h2
@@ -566,7 +566,7 @@ function App() {
                 <span className="highlighted-number">
                   {selectedZoneData.toLocaleString()}
                 </span>{" "}
-                total interactions so far!
+                total interactions!
               </h3>
             </div>
           )}
