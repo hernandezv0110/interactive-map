@@ -596,12 +596,14 @@ function App() {
                 className="zone-data"
                 style={{ position: "relative", display: "inline-block" }}
               >
-                <p>{zone} Interaction Distribution Percentage</p>
+                <p className="zone-title">
+                  {zone} Interaction Distribution Percentage
+                </p>
                 <PercentageBar
                   interactionPercentage={getPercentage(area, zone)}
                   color={selectedColor}
                 />
-                <p>
+                <p className="zone-description">
                   {" "}
                   {zone} contributed {getPercentage(area, zone)}% of all
                   interactions in {area}.

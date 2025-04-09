@@ -245,9 +245,13 @@ img {
   margin-top: 0;
 }
 
-.zone-data p {
+.zone-title {
   margin-bottom: 60px;
   margin-top: 0;
+}
+
+.zone-description {
+  margin-top: 20px;
 }
 
 @media (max-width: 768px) {
