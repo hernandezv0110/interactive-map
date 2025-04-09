@@ -58,11 +58,13 @@
   font-size: 3rem;
   margin-top: 0px;
   margin-bottom: 0px;
+  margin-left: 10px;
 }
 
 .subtitle {
   font-size: 1.5rem;
   margin-top: 5px;
+  margin-left: 10px;
 }
 
 img {
@@ -216,7 +218,7 @@ img {
 }
 
 .city-text {
-  font-size: 12px;
+  font-size: 1rem;
   margin: 0;
   text-align: left;
 }
