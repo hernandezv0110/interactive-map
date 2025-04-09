@@ -585,7 +585,9 @@ function App() {
                       }}
                     >
                       <h4>{item["Field Service"]}</h4>
-                      <p>{item.Interactions.toLocaleString()}</p>
+                      <p className="interaction_number">
+                        {item.Interactions.toLocaleString()}
+                      </p>
                     </div>
                   ))}
                 </div>
