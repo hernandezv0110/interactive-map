@@ -301,6 +301,24 @@ function App() {
               </div>
             </div>
           </div>
+          <footer
+            style={{
+              textAlign: "center",
+              fontSize: "0.85rem",
+              color: "#888",
+              padding: "1em 0",
+            }}
+          >
+            © 2025 CAP Interactions. Supported by{" "}
+            <a
+              href="https://www.sf.gov/departments--city-administrator--office-civic-engagement-and-immigrant-affairs"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "inherit", textDecoration: "underline" }}
+            >
+              The Office of Civic Engagement and Immigrant Affairs (OCEIA)
+            </a>
+          </footer>
         </div>
         <div className="map" style={{ height: "100vh", width: "100vw" }}>
           {loading ? (
