@@ -92,6 +92,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [teamData, setTeamData] = useState([]);
+  const [fiscalYear, setFiscalYear] = useState("");
+  const [dataDate, setDataDate] = useState("");
   const [zone, setZone] = useState("");
   const [area, setArea] = useState("");
   const [selectedTeamData, setSelectedTeamData] = useState([]);
@@ -122,6 +124,20 @@ function App() {
       .then((json) => {
         console.log("Fetched Data:", json);
         setTeamData(json);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(
+      "https://script.google.com/macros/s/AKfycbwxtJTpvAPtYkjHYeVw1XRDMLbvPq_oCOAcr2t4cXKRMtDq_z6MO_CDI_S_4vPGcuQ_/exec"
+    ) // Replace with your actual URL
+      .then((response) => response.json())
+      .then((json) => {
+        setFiscalYear(json["Fiscal Year"]);
+        setDataDate(new Date(json["Data Date"]).toLocaleDateString("en-US"));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -181,7 +197,7 @@ function App() {
               Community Ambassadors Program Impact Fiscal Year-to-Date{" "}
             </h1>
             <h3 className="subtitle">
-              FY 2024-2025 Total Interactions by Team
+              FY {fiscalYear} Total Interactions by Team
             </h3>
           </div>
           <div className="instructions">
@@ -257,7 +273,7 @@ function App() {
           <div className="footer">
             <div className="city-text">
               <p>City and County of San Francisco</p>
-              <p>Data through 02/28/2025</p>
+              <p>Data through {dataDate}</p>
             </div>
             <div className="map-guide">
               <h3>Map Legend</h3>
