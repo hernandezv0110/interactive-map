@@ -16,8 +16,9 @@
   height: 100vh;
 }
 
-.text, .map {
-  flex: 1; 
+.text,
+.map {
+  flex: 1;
 }
 
 .text {
@@ -35,7 +36,6 @@
   justify-content: center;
   background-color: black;
   color: white;
-
 }
 
 @media (max-width: 768px) {
@@ -44,7 +44,8 @@
     height: auto;
   }
 
-  .text, .map {
+  .text,
+  .map {
     width: 100%;
     height: auto;
   }
@@ -55,7 +56,7 @@
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-top: 0px;
   margin-bottom: 0px;
   margin-left: 10px;
@@ -76,10 +77,10 @@ img {
 .legend {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   gap: 0px;
   font-family: Arial, sans-serif;
-  width: 100%; 
+  width: 100%;
   text-align: center;
 }
 
@@ -87,11 +88,11 @@ img {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
 }
 
 .legend-bar {
-  width: 15vw; 
+  width: 15vw;
   height: 2vh;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -99,14 +100,14 @@ img {
 
 .legend-markers {
   position: absolute;
-  bottom: -20px; 
+  bottom: -20px;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
 .marker {
-  font-size: .7rem;
+  font-size: 0.7rem;
   color: #333;
   position: absolute;
   transform: translateX(-50%);
@@ -114,25 +115,25 @@ img {
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(130px, 1fr)); 
-  gap: 10px; 
+  grid-template-columns: repeat(3, minmax(130px, 1fr));
+  gap: 10px;
   margin-top: 5px;
   padding: 5px;
-  max-width: 30vw; 
-  transform: scale(0.8); 
+  max-width: 30vw;
+  transform: scale(0.8);
 }
 
 .team-card {
   background: white;
-  border-radius: 8px; 
-  padding: 10px; 
+  border-radius: 8px;
+  padding: 10px;
   text-align: center;
   font-size: 0.9em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100px;
-  gap: 8px; 
+  gap: 8px;
 }
 
 .team-card h4 {
@@ -143,7 +144,7 @@ img {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(7px); 
+    transform: translateY(7px);
   }
   to {
     opacity: 1;
@@ -169,21 +170,30 @@ img {
   }
 
   .team-grid {
-    grid-template-columns: repeat(2, minmax(100px, 1fr)); 
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
     max-width: 80vw; /* Prevents overflow */
     transform: scale(1); /* Reset scaling */
     margin-bottom: 40px;
   }
 
   .team-card {
-    font-size: .7em; /* Ensure readability */
+    font-size: 0.7em; /* Ensure readability */
   }
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.7; }
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
 }
 
 .highlighted-number {
@@ -206,7 +216,7 @@ img {
 }
 
 .footer {
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -227,7 +237,6 @@ img {
   height: 140px;
 }
 
-
 @media (max-width: 768px) {
   .title {
     font-size: 1.5rem;
@@ -236,8 +245,6 @@ img {
   .subtitle {
     font-size: 1rem;
   }
-
-
 }
 
 .field-data p {
@@ -263,4 +270,3 @@ img {
 .interaction_number {
   font-size: 1.5rem;
 }
-
