@@ -7,7 +7,6 @@
   height: 100vh;
   width: 100vw;
   display: flex;
-  /*overflow: hidden;*/
 }
 
 .content {
@@ -51,7 +50,7 @@
   }
 
   .map {
-    height: 50vh; /* Adjust map height if needed */
+    height: 50vh;
   }
 }
 
@@ -164,20 +163,20 @@ img {
 
 @media (max-width: 768px) {
   .team-section {
-    flex-direction: column; /* Stack items */
+    flex-direction: column;
     text-align: center;
     align-items: center;
   }
 
   .team-grid {
     grid-template-columns: repeat(2, minmax(100px, 1fr));
-    max-width: 80vw; /* Prevents overflow */
-    transform: scale(1); /* Reset scaling */
+    max-width: 80vw;
+    transform: scale(1);
     margin-bottom: 40px;
   }
 
   .team-card {
-    font-size: 0.7em; /* Ensure readability */
+    font-size: 0.7em;
   }
 }
 

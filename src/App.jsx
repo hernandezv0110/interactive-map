@@ -28,7 +28,7 @@ const homeIcon = new L.Icon({
 });
 
 const getColor = (interactionCount, min, max) => {
-  const colorScale = d3.scaleSequential(d3.interpolateBlues).domain([500, max]);
+  const colorScale = d3.scaleSequential(d3.interpolateOrRd).domain([500, max]);
   return colorScale(interactionCount);
 };
 
