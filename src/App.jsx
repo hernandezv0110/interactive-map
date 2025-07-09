@@ -223,8 +223,8 @@ function App() {
                     id="fiscalYear"
                     style={{ padding: "6px 10px", borderRadius: "4px" }}
                   >
-                    <option>FY 2025-2026</option>
                     <option>FY 2024-2025</option>
+                    <option>FY 2025-2026</option>
                   </select>
                 </div>
               </div>
