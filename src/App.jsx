@@ -103,7 +103,7 @@ function App() {
 
   useEffect(() => {
     fetch(
-      "https://script.google.com/macros/s/AKfycbzzODq2k4wIAeaQOnNvHDa0A_2UBt8IGUAp1-qKG64CUwQmummQT1x7y64FJkD7PEG8/exec"
+      "https://script.google.com/macros/s/AKfycbz2S2ZxBd6o92AEAKNntc2VIp6o8DBU53PGCkbrQ0rRfF-pCMpjWBmdX_tIjkZFT-Zm/exec"
     ) // Replace with your actual URL
       .then((response) => response.json())
       .then((json) => {
@@ -118,7 +118,7 @@ function App() {
 
   useEffect(() => {
     fetch(
-      "https://script.google.com/macros/s/AKfycbylBKCEVE4R6628IMyukmowRo8aSpG8TgtHWEzGfy10uyF791PN3v9DvPS6q5L8fE2MTQ/exec"
+      "https://script.google.com/macros/s/AKfycbyG2o4mwdiwH27aKpsQAybrDPlMfEY-bA3iURV4be1dTeC6AQohcuMnVJoIwZKYRl6AGA/exec"
     ) // Replace with your actual URL
       .then((response) => response.json())
       .then((json) => {
