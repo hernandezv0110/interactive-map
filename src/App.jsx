@@ -201,11 +201,34 @@ function App() {
             </h3>
           </div>
           <div className="instructions">
-            <p style={{ marginTop: "25px" }}>
-              {" "}
-              Interact with the map by clicking on a team's work zone to learn
-              more!
-            </p>
+            <div style={{ marginTop: "25px", padding: "0 20px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p>
+                  Interact with the map by clicking on a team's work zone to
+                  learn more!
+                </p>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                >
+                  <label htmlFor="fiscalYear" style={{ fontSize: "14px" }}>
+                    Fiscal Year Selected:
+                  </label>
+                  <select
+                    id="fiscalYear"
+                    style={{ padding: "6px 10px", borderRadius: "4px" }}
+                  >
+                    <option>FY 2025-2026</option>
+                    <option>FY 2024-2025</option>
+                  </select>
+                </div>
+              </div>
+            </div>
             {area.length > 0 && (
               <h2
                 style={{
