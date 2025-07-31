@@ -92,7 +92,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [teamData, setTeamData] = useState([]);
-  const [fiscalYear, setFiscalYear] = useState("");
+  const [fiscalYear, setFiscalYear] = useState("2025-2026");
   const [dataDate, setDataDate] = useState("");
   const [zone, setZone] = useState("");
   const [area, setArea] = useState("");
@@ -103,7 +103,7 @@ function App() {
 
   useEffect(() => {
     fetch(
-      "https://script.google.com/macros/s/AKfycbz2S2ZxBd6o92AEAKNntc2VIp6o8DBU53PGCkbrQ0rRfF-pCMpjWBmdX_tIjkZFT-Zm/exec"
+      "https://script.google.com/macros/s/AKfycbzdVum39YP-o4AU2k5KzRyTKRNXVtgm-y0-p6ftoVINTRV96MN3hZex3BdYylmiIKpY/exec"
     ) // Replace with your actual URL
       .then((response) => response.json())
       .then((json) => {
@@ -118,11 +118,11 @@ function App() {
 
   useEffect(() => {
     fetch(
-      "https://script.google.com/macros/s/AKfycbyG2o4mwdiwH27aKpsQAybrDPlMfEY-bA3iURV4be1dTeC6AQohcuMnVJoIwZKYRl6AGA/exec"
+      "https://script.google.com/macros/s/AKfycbzjpP_Gg2Gmq_saDv6bMgkIEpV6sJSlbBmMxLe2SXU9SXpmwANnhHGUOaUPpMLeAkD-iw/exec"
     ) // Replace with your actual URL
       .then((response) => response.json())
       .then((json) => {
-        console.log("Fetched Data:", json);
+        // console.log("Fetched Data:", json);
         setTeamData(json);
       })
       .catch((error) => {
@@ -136,7 +136,6 @@ function App() {
     ) // Replace with your actual URL
       .then((response) => response.json())
       .then((json) => {
-        setFiscalYear(json["Fiscal Year"]);
         setDataDate(new Date(json["Data Date"]).toLocaleDateString("en-US"));
       })
       .catch((error) => {
@@ -147,7 +146,9 @@ function App() {
   const getMinMaxInteractions = () => {
     if (data.length === 0) return { min: 0, max: 0 };
 
-    const interactions = data.map((item) => item.Interactions);
+    const interactions = data
+      .filter((item) => item.fiscalYear === `FY ${fiscalYear}`)
+      .map((item) => item.Interactions);
     return {
       min: Math.min(...interactions),
       max: Math.max(...interactions),
@@ -172,7 +173,10 @@ function App() {
       workName = "D10";
     }
     const result = data.find(
-      (item) => item["Work Area"] === workName && item["Work Zone"] === workZone
+      (item) =>
+        item.fiscalYear === `FY ${fiscalYear}` &&
+        item["Work Area"] === workName &&
+        item["Work Zone"] === workZone
     );
     return result ? Number(result.Interactions) : 0;
   };
@@ -181,12 +185,43 @@ function App() {
     const workZoneInteractions = getInteractions(workArea, workZone);
     const updatedWorkArea = updateWorkAreaName(workArea);
     const filtered = data.filter(
-      (item) => item["Work Area"] === updatedWorkArea
-    );
+      (item) =>
+        item.fiscalYear === `FY ${fiscalYear}` &&
+        item["Work Area"] === updatedWorkArea
+    );    
     const total = filtered.reduce((sum, item) => sum + item.Interactions, 0);
     const percentage = (workZoneInteractions / total) * 100;
     return percentage.toFixed(0);
   };
+
+  const handleFiscalYearChange = (event) => {
+    const selectedYear = event.target.value;
+    setFiscalYear(selectedYear);
+    // console.log("Selected fiscal year:", selectedYear);
+    // You can add more logic here if needed
+  };
+
+  useEffect(() => {
+    if (zone && area && data.length > 0 && teamData.length > 0) {
+      const updatedInteractions = getInteractions(area, zone); // Fix the order
+      setSelectedZoneData(updatedInteractions);
+  
+      const updatedTeamData = teamData.filter(
+        (item) =>
+          item.fiscalYear === `FY ${fiscalYear}` &&
+          item["Team"] === area
+      );
+      setSelectedTeamData(updatedTeamData);
+
+      const { min, max } = getMinMaxInteractions();
+
+      // console.log(updatedInteractions);
+      const color = getColor(updatedInteractions, min, max);
+      setSelectedColor(color);
+    }
+  }, [zone, area, fiscalYear, data, teamData]);
+  
+  
 
   return (
     <div className="page">
@@ -221,10 +256,12 @@ function App() {
                   </label>
                   <select
                     id="fiscalYear"
+                    value={fiscalYear}
+                    onChange={handleFiscalYearChange}
                     style={{ padding: "6px 10px", borderRadius: "4px" }}
                   >
-                    <option>FY 2024-2025</option>
-                    <option>FY 2025-2026</option>
+                    <option>2025-2026</option>
+                    <option>2024-2025</option>
                   </select>
                 </div>
               </div>
@@ -253,7 +290,7 @@ function App() {
             </div>
           )}
           {selectedTeamData.length > 0 && (
-            <div className="team-section">
+            <div className="team-section" >
               <div className="field-data">
                 <p>{area} Field Service Data</p>
                 <div className="team-grid">
@@ -352,6 +389,7 @@ function App() {
               zoom={13}
               style={{ height: "100%", width: "100%" }}
               scrollWheelZoom={true}
+              key={fiscalYear}
             >
               <TileLayer
                 url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
@@ -409,7 +447,9 @@ function App() {
                           );
 
                           const teamDetails = teamData.filter(
-                            (item) => item["Team"] === area.name
+                            (item) =>
+                              item.fiscalYear === `FY ${fiscalYear}` &&
+                              item["Team"] === area.name
                           );
 
                           setSelectedTeamData([]);
